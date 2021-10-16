@@ -3,15 +3,15 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
-	
+public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+{
 	public Transform parentToReturnTo = null;
 	public Transform placeholderParent = null;
 
 	GameObject placeholder = null;
 	
 	public void OnBeginDrag(PointerEventData eventData) {
-		Debug.Log ("OnBeginDrag");
+		//Debug.Log ("OnBeginDrag");
 		
 		placeholder = new GameObject();
 		placeholder.transform.SetParent( this.transform.parent );
@@ -55,9 +55,14 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 		placeholder.transform.SetSiblingIndex(newSiblingIndex);
 
 	}
-	
-	public void OnEndDrag(PointerEventData eventData) {
-		Debug.Log ("OnEndDrag");
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnEndDrag(PointerEventData eventData) {
+		//Debug.Log ("OnEndDrag");
 		this.transform.SetParent( parentToReturnTo );
 		this.transform.SetSiblingIndex( placeholder.transform.GetSiblingIndex() );
 		GetComponent<CanvasGroup>().blocksRaycasts = true;
