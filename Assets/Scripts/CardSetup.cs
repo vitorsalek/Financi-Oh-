@@ -47,8 +47,14 @@ public class CardSetup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         }
     }
 
+    public void resetCardValue()
+    {
+        value = 0;
+        previousValue = 0;
+    }
+
     public float CalculateValue()
     {
-        return value;
+        return value*1.1f;
     }
 }

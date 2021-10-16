@@ -20,6 +20,7 @@ public class PlayerInfo : MonoBehaviour
     // Start is called before the first frame update
     void Start() {
         GetEventCard();
+        GetHandCards();
     }
     
 
@@ -37,9 +38,12 @@ public class PlayerInfo : MonoBehaviour
             {
                 CardSetup card = cardTransform.GetComponent<CardSetup>();
                 money += card.CalculateValue();
-                money_txt.text = money.ToString();
+                money_txt.text = money.ToString() + "$";
+                card.resetCardValue();
             }
             GetEventCard();
+            ResetCards();
+            GetHandCards();
         }
         else
         {
@@ -63,29 +67,42 @@ public class PlayerInfo : MonoBehaviour
     }
     private void ResetCards()
     {
+        int childCount = tableCards.transform.childCount;
 
+        for (int i = 0; i < childCount; i++)
+        {
+            Transform card = tableCards.transform.GetChild(0);
+            card.SetParent(handCards.transform);
+            card.gameObject.SetActive(false);
+        }
+        foreach (Transform card in handCards.transform)
+        {
+            if (card.gameObject.activeInHierarchy)
+            {
+                card.gameObject.SetActive(false);
+            }
+        }
     }
     private void GetHandCards()
     {
-        if (curEventCard != null)
-            curEventCard.gameObject.SetActive(false);
-        int i = Random.Range(0, eventsCards.transform.childCount);
-        EventCard eventCard = eventsCards.transform.GetChild(i).GetComponent<EventCard>();
-        while (eventCard == curEventCard)
+        int counter = 0;
+        while (counter < 4)
         {
-            i = Random.Range(0, eventsCards.transform.childCount);
-            eventCard = eventsCards.transform.GetChild(i).GetComponent<EventCard>();
+            int i = Random.Range(0, handCards.transform.childCount);
+            Transform handCard = handCards.transform.GetChild(i);
+            if (!handCard.gameObject.activeInHierarchy)
+            {
+                handCard.gameObject.SetActive(true);
+                counter++;
+            }
         }
-
-        curEventCard = eventCard;
-        curEventCard.gameObject.SetActive(true);
     }
 
     public void OnInputChange()
     {
         if (selectedCard != null)
         {
-            
+
             selectedCard.value_txt.text = inputValue_txt.text;
             selectedCard.value = int.Parse(inputValue_txt.text);
             money += selectedCard.previousValue;
@@ -93,13 +110,13 @@ public class PlayerInfo : MonoBehaviour
             selectedCard.previousValue = selectedCard.value;
             if (money >= 0)
             {
-                money_txt.text = money.ToString();
+                money_txt.text = money.ToString() + "$";
                 money_txt.color = Color.white;
             }
             else
             {
-                money_txt.text = money.ToString();
-                money_txt.color=Color.red;
+                money_txt.text = money.ToString() + "$";
+                money_txt.color = Color.red;
             }
         }
     }
