@@ -8,13 +8,12 @@ public class CardSetup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 {
     public PlayerInfo playerInfo;
     public TextMeshProUGUI value_txt;
-    public float value;
-    public float previousValue;
+    [HideInInspector]public float value;
+    [HideInInspector] public float previousValue;
     public GameObject highLight;
-    public bool mouseInside = false;
+    [HideInInspector] public bool mouseInside = false;
     public float valorization;
     public float desvalorization;
-
     public void OnPointerEnter(PointerEventData eventData)
     {
         mouseInside = true;
