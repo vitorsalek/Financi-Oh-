@@ -103,7 +103,7 @@ public class PlayerInfo : MonoBehaviour
         if (selectedCard != null)
         {
 
-            selectedCard.value_txt.text = inputValue_txt.text;
+            selectedCard.value_txt.text = inputValue_txt.text + " $";
             selectedCard.value = int.Parse(inputValue_txt.text);
             money += selectedCard.previousValue;
             money -= selectedCard.value;
