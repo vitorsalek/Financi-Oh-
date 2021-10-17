@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+public enum CardCategorie { tecnology, agro, imobi };
 public class PlayerInfo : MonoBehaviour
 {
     public float money;

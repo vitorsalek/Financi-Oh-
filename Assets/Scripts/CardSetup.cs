@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 
+
 public class CardSetup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    public CardCategorie myCategorie;
     public PlayerInfo playerInfo;
     public TextMeshProUGUI value_txt;
     [HideInInspector]public float value;

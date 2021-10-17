@@ -4,16 +4,11 @@ using UnityEngine;
 
 public class EventCard : MonoBehaviour
 {
+    public int blue;
+    public int orange;
+    public int green;
+    public int tecnology;
+    public int agro;
+    public int imobi;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
