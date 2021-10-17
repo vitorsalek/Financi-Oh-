@@ -70,9 +70,9 @@ public class PlayerInfo : MonoBehaviour
                     diffText.color = Color.green;
                 money_txt.text = money.ToString("F2") + "$";
                 card.resetCardValue();
-                turn++;
-                turn_txt.text = "Mês: " + turn.ToString();
             }
+            turn++;
+            turn_txt.text = "Mês: " + turn.ToString();
             GetEventCard();
             ResetCards();
             GetHandCards();

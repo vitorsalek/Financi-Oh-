@@ -9289,7 +9289,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00029280994, y: 0.0004942323}
+  m_AnchoredPosition: {x: 0.00029280994, y: 0.00006379736}
   m_SizeDelta: {x: 0, y: 104.79}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &739153202
@@ -16908,7 +16908,7 @@ GameObject:
   - component: {fileID: 1246388215}
   - component: {fileID: 1246388214}
   m_Layer: 5
-  m_Name: Depois_txt
+  m_Name: Agora_txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16953,7 +16953,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Depois
+  m_text: Agora
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -16980,7 +16980,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34.5
+  m_fontSize: 36.9
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -20475,7 +20475,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 0c5a2bf2f7c19434b9be3b241e0aee6e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -26144,7 +26144,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 908532185}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99998605
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
