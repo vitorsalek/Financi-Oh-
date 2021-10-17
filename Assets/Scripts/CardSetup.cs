@@ -51,6 +51,7 @@ public class CardSetup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void resetCardValue()
     {
+        value_txt.text = "0 $";
         value = 0;
         previousValue = 0;
     }
