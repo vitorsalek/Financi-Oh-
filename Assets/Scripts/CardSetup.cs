@@ -8,6 +8,7 @@ using TMPro;
 public class CardSetup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public CardCategorie myCategorie;
+    public CardRegion myRegion;
     public PlayerInfo playerInfo;
     public TextMeshProUGUI value_txt;
     [HideInInspector]public float value;
@@ -54,8 +55,47 @@ public class CardSetup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         previousValue = 0;
     }
 
+    private int GetTotalChance()
+    {
+        int totalChance = 0;
+        if (myCategorie == CardCategorie.agro)
+        {
+            totalChance += playerInfo.curEventCard.agro;
+        }
+        else if (myCategorie == CardCategorie.tecnology)
+        {
+            totalChance += playerInfo.curEventCard.tecnology;
+        }
+        else
+        {
+            totalChance += playerInfo.curEventCard.imobi;
+        }
+        if (myRegion == CardRegion.blue)
+        {
+            totalChance += playerInfo.curEventCard.blue;
+        }
+        else if (myRegion == CardRegion.orange)
+        {
+            totalChance += playerInfo.curEventCard.orange;
+        }
+        else
+        {
+            totalChance += playerInfo.curEventCard.green;
+        }
+        return totalChance;
+    }
+
     public float CalculateValue()
     {
-        return value*1.1f;
+        float totalValue = 0;
+        int totalChance=GetTotalChance();
+        int randomValue = Random.Range(1, 13);
+        if (randomValue <= totalChance)
+        {
+            totalValue += value * valorization;
+        }
+        else
+            totalValue += value * desvalorization;
+        return totalValue;
     }
 }

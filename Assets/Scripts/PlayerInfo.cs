@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 
 public enum CardCategorie { tecnology, agro, imobi };
+public enum CardRegion { blue, orange, green };
 public class PlayerInfo : MonoBehaviour
 {
     public float money;
