@@ -9,40 +9,27 @@ public enum CardRegion { blue, orange, green };
 public class PlayerInfo : MonoBehaviour
 {
     public float money;
-    private float previousalue;
     private int turn;
     public GameObject handCards;
     public GameObject tableCards;
     public GameObject eventsCards;
-    public Transform logContent;
-    public GameObject logText;
-    public GameObject logPos;
-    private GameObject lastLog;
-    public ScrollRect scrollRect;
     public EventCard curEventCard;
     public CardSetup selectedCard;
-    public TextMeshProUGUI money_txt;
-    public TMP_InputField inputValue_txt;
-    public TextMeshProUGUI turn_txt;
 
     private float previousMoney;
 
     public bool isOnInput = false;
 
+    private UIManager uiManager;
+
     // Start is called before the first frame update
     void Start() {
         turn = 0;
-        turn_txt.text = "Mês: " + turn.ToString();
+        uiManager = GetComponent<UIManager>();
+        uiManager.SetTurnText(turn);
         previousMoney = money;
         GetEventCard();
         GetHandCards();
-    }
-    
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void OnInvestmentButton()
@@ -52,38 +39,25 @@ public class PlayerInfo : MonoBehaviour
             foreach (Transform cardTransform in tableCards.transform)
             {
                 CardSetup card = cardTransform.GetComponent<CardSetup>();
-                money += card.CalculateValue();
-                scrollRect.verticalNormalizedPosition = 0;
-                GameObject logTextInstance = Instantiate(logText, logContent);
-                if (lastLog != null)
-                    lastLog.SetActive(false);
-                lastLog = logTextInstance;
-                logTextInstance.transform.position = logPos.transform.position;
-                logTextInstance.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = previousMoney.ToString("F2");
-                logTextInstance.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = money.ToString("F2");
-                TextMeshProUGUI diffText = logTextInstance.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-                float diffValue = (money - previousMoney);
-                diffText.text = diffValue <= 0 ? diffValue. ToString("F2") : "+" + diffValue.ToString("F2");
-                if (diffValue <= 0)
-                    diffText.color = Color.red;
-                else
-                    diffText.color = Color.green;
-                money_txt.text = money.ToString("F2") + "$";
+                money += card.CalculateValue();    
+                uiManager.InstantiateLogText(money, previousMoney);
+                uiManager.SetMoneyText(money, Color.clear);
                 card.resetCardValue();
             }
             turn++;
-            turn_txt.text = "Mês: " + turn.ToString();
+            uiManager.SetTurnText(turn);
             GetEventCard();
             ResetCards();
             GetHandCards();
             previousMoney = money;
-
         }
         else
         {
             print("dinheiro insuficiente");
         }
     }
+
+
     private void GetEventCard()
     {
         if (curEventCard != null)
@@ -136,22 +110,30 @@ public class PlayerInfo : MonoBehaviour
     {
         if (selectedCard != null)
         {
-
-            selectedCard.value_txt.text = inputValue_txt.text + " $";
-            selectedCard.value = int.Parse(inputValue_txt.text);
+            selectedCard.value_txt.text = uiManager.inputValue_txt.text + " $";
+            selectedCard.value = int.Parse(uiManager.inputValue_txt.text);
             money += selectedCard.previousValue;
             money -= selectedCard.value;
             selectedCard.previousValue = selectedCard.value;
             if (money >= 0)
             {
-                money_txt.text = money.ToString("F2") + "$";
-                money_txt.color = Color.white;
+                uiManager.SetMoneyText(money, Color.white);
             }
             else
             {
-                money_txt.text = money.ToString("F2") + "$";
-                money_txt.color = Color.red;
+                uiManager.SetMoneyText(money, Color.red);
             }
         }
+        else
+            uiManager.inputValue_txt.text = "";
+    }
+    public void OnInputDeselect()
+    {
+        StartCoroutine(SetInputEmpty());
+    }
+    public IEnumerator SetInputEmpty()
+    {
+        yield return new WaitForSeconds(0.1f);
+        uiManager.inputValue_txt.text = "0";
     }
 }
