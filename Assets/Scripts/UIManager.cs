@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
     public Transform logContent;
     public GameObject logText;
     public ScrollRect scrollRect;
+    public Transform handCardsSpawnDeck;
+
 
     public void SetTurnText(int turn)
     {
@@ -21,18 +23,15 @@ public class UIManager : MonoBehaviour
     }
     public void SetMoneyText(float money, Color color)
     {
-        print(money);
         money_txt.text = money.ToString("F2") + "$";
-        print(money_txt.text);
         if (color != Color.clear)
             money_txt.color = color;
-        print("foi");
     }
 
     public void SetDiffText(TextMeshProUGUI diffText, float diffValue)
     {
         diffText.text = diffValue <= 0 ? diffValue.ToString("F2") : "+" + diffValue.ToString("F2");
-        diffText.color = diffValue <= 0 ? Color.red : Color.green;
+        diffText.color = diffValue < 0 ? Color.red : Color.green;
     }
 
     public void InstantiateLogText(float money, float previousMoney)
@@ -48,5 +47,14 @@ public class UIManager : MonoBehaviour
         TextMeshProUGUI diffText = logTextInstance.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         float diffValue = (money - previousMoney);
         SetDiffText(diffText, diffValue);
+    }
+
+    public void OpenCloseSettings(GameObject canvas)
+    {
+        if (!canvas.activeInHierarchy)
+            canvas.gameObject.SetActive(true);
+        else
+            canvas.gameObject.SetActive(false);
+
     }
 }

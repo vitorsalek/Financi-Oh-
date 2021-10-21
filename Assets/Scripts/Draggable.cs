@@ -12,7 +12,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 	
 	public void OnBeginDrag(PointerEventData eventData) {
 		//Debug.Log ("OnBeginDrag");
-		
+		AudioManager.current.Play("GetCard");
 		placeholder = new GameObject();
 		placeholder.transform.SetParent( this.transform.parent );
 		LayoutElement le = placeholder.AddComponent<LayoutElement>();
@@ -66,7 +66,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 		this.transform.SetParent( parentToReturnTo );
 		this.transform.SetSiblingIndex( placeholder.transform.GetSiblingIndex() );
 		GetComponent<CanvasGroup>().blocksRaycasts = true;
-
+		AudioManager.current.Play("DropCard");
 		Destroy(placeholder);
 	}
 	
