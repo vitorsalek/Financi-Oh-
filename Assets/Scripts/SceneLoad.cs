@@ -8,38 +8,39 @@ public class SceneLoad : MonoBehaviour
     public GameObject MainMenuUI;
     public GameObject SettingsUI;
     public GameObject CreditsUI;
-    
+
+
     public void LoadPlay()
     {
-        //AudioManager.instance.Play("ButtonClick");
+        AudioManager.current.Play("Open");
         SceneManager.LoadSceneAsync("Play");
     }
 
     public void LoadSettings()
     {
-        //AudioManager.instance.Play("ButtonClick");
-        MainMenuUI.SetActive(false);
+        AudioManager.current.Play("Open");
+        //MainMenuUI.SetActive(false);
         SettingsUI.SetActive(true);
     }
     public void QuitSettings()
     {
-        //AudioManager.instance.Play("ButtonClick");
+        AudioManager.current.Play("Close");
         SettingsUI.SetActive(false);
-        MainMenuUI.SetActive(true);
+        //MainMenuUI.SetActive(true);
     }
 
     public void LoadCredits()
     {
-        //AudioManager.instance.Play("ButtonClick");
-        MainMenuUI.SetActive(false);
+        AudioManager.current.Play("Open");
+        //MainMenuUI.SetActive(false);
         CreditsUI.SetActive(true);
     }
 
     public void QuitCredits()
     {
-        //AudioManager.instance.Play("ButtonClick");
+        AudioManager.current.Play("Close");
         CreditsUI.SetActive(false);
-        MainMenuUI.SetActive(true);
+        //MainMenuUI.SetActive(true);
     }
 
 

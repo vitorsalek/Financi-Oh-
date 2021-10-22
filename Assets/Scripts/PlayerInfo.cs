@@ -22,7 +22,7 @@ public class PlayerInfo : MonoBehaviour
     bool investButtonCooldown = false;
     bool deselected = false;
 
-    private UIManager uiManager;
+    [HideInInspector]public UIManager uiManager;
     private GoalSystem goalSystem;
     public AudioManager audioManager;
 
@@ -52,10 +52,10 @@ public class PlayerInfo : MonoBehaviour
                 {
                     CardSetup card = cardTransform.GetComponent<CardSetup>();
                     money += card.CalculateValue();
-                    uiManager.InstantiateLogText(money, previousMoney);
-                    uiManager.SetMoneyText(money, Color.clear);
                     card.resetCardValue();
                 }
+                uiManager.InstantiateLogText(money, previousMoney);
+                uiManager.SetMoneyText(money, Color.clear);
                 turn++;
                 uiManager.SetTurnText(turn);
                 GetEventCard();
@@ -63,12 +63,26 @@ public class PlayerInfo : MonoBehaviour
                 GetHandCards(0.3f);
                 previousMoney = money;
                 AudioManager.current.Play("NextRound");
+                CheckGoal();
             }
             else
             {
                 print("dinheiro insuficiente");
             }
         }
+    }
+
+    private void CheckGoal()
+    {
+        if (goalSystem.goals[0].goalAmount <= money && goalSystem.goals.Count>=2)
+        {
+            goalSystem.goals.RemoveAt(0);
+            uiManager.RefreshGoalUI(goalSystem.goals[0]);
+        }else if (goalSystem.goals[0].goalAmount <= money && goalSystem.goals.Count == 1)
+        {
+            print("zerou o jogo");
+        }
+
     }
 
     private void GetEventCard()
@@ -133,7 +147,7 @@ public class PlayerInfo : MonoBehaviour
 
     public void OnInputChange()
     {
-        if (selectedCard != null && !deselected)
+        if (selectedCard != null && !deselected && CardOnTable())
         {
             //if (selectedCard.value)
             selectedCard.value_txt.text = uiManager.inputValue_txt.text + " $";
@@ -149,6 +163,7 @@ public class PlayerInfo : MonoBehaviour
             {
                 uiManager.SetMoneyText(money, Color.red);
             }
+            AudioManager.current.Play("Typing");
         }
     }
     public void OnInputDeselect()
@@ -156,13 +171,20 @@ public class PlayerInfo : MonoBehaviour
         deselected = true;
         StartCoroutine(SetInputEmpty());
     }
-
+    private bool CardOnTable()
+    {
+        foreach (Transform card in tableCards.transform)
+        {
+            if (selectedCard == card.GetComponent<CardSetup>())
+                return true;
+        }
+        return false;
+    }
     private IEnumerator DesactivateTableCards(List<Transform> cards, float time)
     {
         yield return new WaitForSeconds(time);
         foreach (Transform card in cards)
         {
-            print("parente desliga " + card.gameObject.name);
             card.SetParent(handCards.transform);
             card.gameObject.SetActive(false);
         }
@@ -182,7 +204,7 @@ public class PlayerInfo : MonoBehaviour
     }
     public IEnumerator InvestButtonCooldownTimer()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.6f);
         investButtonCooldown=false;
     }
 }

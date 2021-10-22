@@ -8,7 +8,7 @@ public class GoalSystem : MonoBehaviour
     [Serializable]
     public class Goal
     {
-        public float goalAmount;
+        public int goalAmount;
         public int turn;
     }
     public List<Goal> goals = new List<Goal>();
