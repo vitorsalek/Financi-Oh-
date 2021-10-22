@@ -18,6 +18,8 @@ public class UIManager : MonoBehaviour
     public Color colorGreen;
     public DropMoneyParticle moneyParticle;
     public TextMeshProUGUI goal_txt;
+    public GameObject goodEnding;
+    public GameObject badEnding;
 
 
     public void SetTurnText(int turn)
@@ -35,12 +37,14 @@ public class UIManager : MonoBehaviour
     {
         diffText.text = diffValue <= 0 ? diffValue.ToString("F2") : "+" + diffValue.ToString("F2");
         diffText.color = diffValue < 0 ? colorRed : colorGreen;
+        if (diffValue == 0)
+            diffText.color = Color.white;
 
     }
 
     public void InstantiateLogText(float money, float previousMoney)
     {
-        scrollRect.verticalNormalizedPosition = 0;
+        //scrollRect.verticalNormalizedPosition = 0;
         GameObject logTextInstance = Instantiate(logText, logContent);
         if (lastLog != null)
             lastLog.SetActive(false);

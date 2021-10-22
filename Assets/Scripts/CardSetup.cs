@@ -43,7 +43,7 @@ public class CardSetup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         }
     }
 
-    public void resetCardValue()
+    public void ResetCardValue()
     {
         value_txt.text = "0 $";
         value = 0;
@@ -85,6 +85,7 @@ public class CardSetup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         float totalValue = 0;
         int totalChance=GetTotalChance();
         int randomValue = Random.Range(1, 13);
+        print("meu valor: "+value);
         if (randomValue <= totalChance)
         {
             totalValue += value * valorization;

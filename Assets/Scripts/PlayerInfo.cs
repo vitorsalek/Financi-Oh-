@@ -21,6 +21,7 @@ public class PlayerInfo : MonoBehaviour
     public bool isOnInput = false;
     bool investButtonCooldown = false;
     bool deselected = false;
+    bool endlessMode = false;
 
     [HideInInspector]public UIManager uiManager;
     private GoalSystem goalSystem;
@@ -38,6 +39,7 @@ public class PlayerInfo : MonoBehaviour
         GetEventCard();
         GetHandCards(0.1f);
         uiManager.SetMoneyText(money, Color.clear);
+        uiManager.RefreshGoalUI(goalSystem.goals[0]);
     }
 
     public void OnInvestmentButton()
@@ -52,7 +54,7 @@ public class PlayerInfo : MonoBehaviour
                 {
                     CardSetup card = cardTransform.GetComponent<CardSetup>();
                     money += card.CalculateValue();
-                    card.resetCardValue();
+                    card.ResetCardValue();
                 }
                 uiManager.InstantiateLogText(money, previousMoney);
                 uiManager.SetMoneyText(money, Color.clear);
@@ -74,15 +76,21 @@ public class PlayerInfo : MonoBehaviour
 
     private void CheckGoal()
     {
-        if (goalSystem.goals[0].goalAmount <= money && goalSystem.goals.Count>=2)
+        if (!endlessMode)
         {
-            goalSystem.goals.RemoveAt(0);
-            uiManager.RefreshGoalUI(goalSystem.goals[0]);
-        }else if (goalSystem.goals[0].goalAmount <= money && goalSystem.goals.Count == 1)
-        {
-            print("zerou o jogo");
+            if (goalSystem.goals[0].goalAmount <= money && goalSystem.goals.Count >= 2)
+            {
+                goalSystem.goals.RemoveAt(0);
+                uiManager.RefreshGoalUI(goalSystem.goals[0]);
+            }
+            else if (goalSystem.goals[0].goalAmount <= money && goalSystem.goals.Count == 1)
+            {
+                uiManager.goodEnding.SetActive(true);
+                return;
+            }
+            if (goalSystem.goals[0].turn < turn)
+                uiManager.badEnding.SetActive(true);
         }
-
     }
 
     private void GetEventCard()
@@ -171,6 +179,13 @@ public class PlayerInfo : MonoBehaviour
         deselected = true;
         StartCoroutine(SetInputEmpty());
     }
+
+    public void EndlessMode()
+    {
+        endlessMode = true;
+        uiManager.goodEnding.SetActive(false);
+    }
+
     private bool CardOnTable()
     {
         foreach (Transform card in tableCards.transform)

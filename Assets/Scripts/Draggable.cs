@@ -76,10 +76,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             CardSetup card = GetComponent<CardSetup>();
 			card.playerInfo.money += card.value;
 			card.playerInfo.uiManager.SetMoneyText(card.playerInfo.money, Color.clear);
-			card.value = 0;
-            card.value_txt.text = "0$";
-			
-        }
+			card.ResetCardValue();
+		}
 
 	}
 	
