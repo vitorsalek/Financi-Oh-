@@ -82,6 +82,11 @@ public class PlayerInfo : MonoBehaviour
             {
                 goalSystem.goals.RemoveAt(0);
                 uiManager.RefreshGoalUI(goalSystem.goals[0]);
+                if(goalSystem.goals[0].goalAmount <= money && goalSystem.goals.Count >= 2)
+                {
+                    goalSystem.goals.RemoveAt(0);
+                    uiManager.RefreshGoalUI(goalSystem.goals[0]);
+                }
             }
             else if (goalSystem.goals[0].goalAmount <= money && goalSystem.goals.Count == 1)
             {
